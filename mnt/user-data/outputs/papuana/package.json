@@ -1,0 +1,13 @@
+{
+  "name": "papuana-platform",
+  "version": "1.0.0",
+  "description": "PAPUANA - Platform Digital Terpadu UMKM Papua Barat Daya",
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install",
+    "dev": "cd backend && npm run dev",
+    "start": "cd backend && npm start",
+    "setup": "npm run install:all && echo '\\n✅ PAPUANA siap! Jalankan: npm run dev'"
+  },
+  "keywords": ["papua", "umkm", "wisata", "oap"],
+  "author": "PAPUANA Dev Team"
+}

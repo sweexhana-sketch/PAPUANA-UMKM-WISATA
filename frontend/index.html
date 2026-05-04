@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PAPUANA — Platform Digital Terpadu Papua Barat Daya</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body>
+<nav class="navbar">
+  <div class="container navbar-inner">
+    <div class="nav-logo" onclick="navigate('home')">
+      <div class="nav-logo-icon">🌿</div>
+      <div><div class="nav-logo-text">PAPUANA</div><div class="nav-logo-sub">Papua Barat Daya</div></div>
+    </div>
+    <div class="nav-links">
+      <span class="nav-link" data-nav="home" onclick="navigate('home')">🏠 Beranda</span>
+      <span class="nav-link" data-nav="marketplace" onclick="navigate('marketplace')">🛒 Marketplace</span>
+      <span class="nav-link" data-nav="wisata" onclick="navigate('wisata')">🏝️ Wisata</span>
+      <span class="nav-link" data-nav="edukasi" onclick="navigate('edukasi')">📚 Edukasi</span>
+      <span class="nav-link" data-nav="fintech" onclick="navigate('fintech')">💳 Fintech</span>
+      <span class="nav-link" data-nav="agri" onclick="navigate('agri')">🐟 Agri-Maritim</span>
+      <span class="nav-link" data-nav="budaya" onclick="navigate('budaya')">🎨 Budaya</span>
+      <span class="nav-link" data-nav="dashboard" onclick="navigate('dashboard')">📊 Dashboard</span>
+      <span class="nav-link" data-nav="pad" onclick="navigate('pad')">🏛️ PAD &amp; OAP</span>
+    </div>
+    <div class="nav-right">
+      <div id="nav-user-area">
+        <button class="btn btn-secondary btn-sm" onclick="openModal('modal-login')">Masuk</button>
+        <button class="btn btn-primary btn-sm" onclick="openModal('modal-register')">Daftar OAP</button>
+      </div>
+      <div id="nav-user-info" class="hidden flex-center gap-8">
+        <span id="nav-username" style="font-size:13px;font-weight:600;color:var(--forest)"></span>
+        <div id="nav-oap-badge" class="oap-badge hidden">🌿 OAP</div>
+        <button class="btn btn-sm" style="background:#fee2e2;color:#dc2626" onclick="logout()">Keluar</button>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- PAGE: HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-particles">
+      <div class="hero-particle" style="background:#10b981;top:-50px;right:10%"></div>
+      <div class="hero-particle" style="background:#f59e0b;bottom:-50px;right:30%"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <div class="hero-tag reveal">🌿 Provinsi Papua Barat Daya — Pelopor Digital</div>
+      <h1 class="reveal" style="animation-delay:.1s">Platform Digital <span>UMKM & Wisata</span> Papua</h1>
+      <p class="reveal" style="animation-delay:.2s">Ekosistem terpadu memberdayakan OAP melalui marketplace, pariwisata, edukasi, dan layanan keuangan digital.</p>
+      <div class="hero-btns reveal" style="animation-delay:.3s">
+        <button class="btn btn-primary btn-lg" onclick="navigate('marketplace')">🛒 Jelajahi Marketplace</button>
+        <button class="btn btn-glass btn-lg" onclick="navigate('wisata')">🏝️ Destinasi Wisata</button>
+        <button class="btn btn-gold btn-lg" onclick="openModal('modal-register')">🌿 Daftar OAP</button>
+      </div>
+      <div class="hero-stats reveal" style="animation-delay:.4s">
+        <div><div class="hero-stat-val" id="hs-umkm">1.247</div><div class="hero-stat-lbl">UMKM Aktif</div></div>
+        <div><div class="hero-stat-val" id="hs-oap">834</div><div class="hero-stat-lbl">Pelaku OAP</div></div>
+        <div><div class="hero-stat-val" id="hs-produk">4.523</div><div class="hero-stat-lbl">Produk</div></div>
+        <div><div class="hero-stat-val" id="hs-wisata">3.421</div><div class="hero-stat-lbl">Wisatawan/Bln</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="margin-top:-40px;position:relative;z-index:20">
+    <div class="container">
+      <div class="grid-4" id="home-stats"></div>
+    </div>
+  </div>
+  <div class="section" style="padding-top:40px">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">🛒 Produk Unggulan OAP</div>
+        <h2>Karya Terbaik Papua Barat Daya</h2>
+      </div>
+      <div class="grid-auto" id="home-products"><div class="loading"><div class="spinner"></div>Memuat...</div></div>
+      <div class="text-center mt-16"><button class="btn btn-secondary" onclick="navigate('marketplace')">Lihat Semua Produk →</button></div>
+    </div>
+  </div>
+  <div class="section" style="background:var(--wash)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">🏝️ Destinasi Wisata</div>
+        <h2>Surga Papua Barat Daya</h2>
+      </div>
+      <div class="grid-3" id="home-wisata"><div class="loading"><div class="spinner"></div>Memuat...</div></div>
+      <div class="text-center mt-16"><button class="btn btn-secondary" onclick="navigate('wisata')">Lihat Semua Destinasi →</button></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">🔗 Ekosistem Terpadu</div>
+        <h2>6 Sektor Terintegrasi</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card text-center" onclick="navigate('marketplace')" style="cursor:pointer">
+          <div style="font-size:40px;margin-bottom:12px">🛒</div><h3>UMKM & Marketplace</h3>
+          <p class="mt-8">Katalog produk OAP, pemesanan, tracking, label Produk Asli Papua.</p>
+          <div class="mt-16"><span class="badge badge-green">1.247 UMKM Aktif</span></div>
+        </div>
+        <div class="card text-center" onclick="navigate('wisata')" style="cursor:pointer">
+          <div style="font-size:40px;margin-bottom:12px">🏝️</div><h3>Pariwisata Digital</h3>
+          <p class="mt-8">Booking destinasi, guide OAP bersertifikat, homestay, QR tiket.</p>
+          <div class="mt-16"><span class="badge badge-blue">8 Destinasi Unggulan</span></div>
+        </div>
+        <div class="card text-center" onclick="navigate('fintech')" style="cursor:pointer">
+          <div style="font-size:40px;margin-bottom:12px">💳</div><h3>Keuangan & Fintech</h3>
+          <p class="mt-8">Dompet digital, pinjaman 0% OAP, bayar pajak, tabungan komunitas.</p>
+          <div class="mt-16"><span class="badge badge-gold">Pinjaman 0% OAP</span></div>
+        </div>
+        <div class="card text-center" onclick="navigate('edukasi')" style="cursor:pointer">
+          <div style="font-size:40px;margin-bottom:12px">📚</div><h3>Edukasi & Pelatihan</h3>
+          <p class="mt-8">Kursus online gratis OAP, sertifikasi resmi, beasiswa digital.</p>
+          <div class="mt-16"><span class="badge badge-purple">40+ Kursus Gratis OAP</span></div>
+        </div>
+        <div class="card text-center" onclick="navigate('agri')" style="cursor:pointer">
+          <div style="font-size:40px;margin-bottom:12px">🐟</div><h3>Agri-Maritim</h3>
+          <p class="mt-8">Supply chain digital nelayan & petani, harga komoditas real-time.</p>
+          <div class="mt-16"><span class="badge badge-green">Ketahanan Pangan</span></div>
+        </div>
+        <div class="card text-center" onclick="navigate('dashboard')" style="cursor:pointer">
+          <div style="font-size:40px;margin-bottom:12px">🏛️</div><h3>Layanan Pemerintah</h3>
+          <p class="mt-8">PTSP online, retribusi digital, laporan PAD real-time, pengaduan.</p>
+          <div class="mt-16"><span class="badge badge-gray">PAD Digital</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PAGE: MARKETPLACE -->
+<div id="page-marketplace" class="page">
+  <div class="container" style="padding:48px 0">
+    <div class="section-header"><div class="section-tag">🛒 Marketplace</div><h2>Produk UMKM Papua Barat Daya</h2><p>Produk langsung dari pengrajin, petani & nelayan OAP</p></div>
+    <div class="filter-bar">
+      <input type="text" id="mp-search" placeholder="🔍 Cari produk, penjual..." oninput="filterProducts()">
+      <select id="mp-category" onchange="filterProducts()">
+        <option value="all">Semua Kategori</option>
+        <option value="kerajinan">🎨 Kerajinan</option>
+        <option value="perikanan">🐟 Perikanan</option>
+        <option value="pertanian">🌾 Pertanian</option>
+      </select>
+      <select id="mp-kabupaten" onchange="filterProducts()">
+        <option value="all">Semua Wilayah</option>
+        <option value="Sorong">Kota Sorong</option>
+        <option value="Raja Ampat">Raja Ampat</option>
+        <option value="Maybrat">Maybrat</option>
+        <option value="Sorong Selatan">Sorong Selatan</option>
+        <option value="Tambrauw">Tambrauw</option>
+      </select>
+      <select id="mp-sort" onchange="filterProducts()">
+        <option value="">Urutkan</option>
+        <option value="rating">⭐ Rating Tertinggi</option>
+        <option value="terlaris">🔥 Terlaris</option>
+        <option value="price_asc">💰 Harga Terendah</option>
+        <option value="price_desc">💰 Harga Tertinggi</option>
+      </select>
+    </div>
+    <div id="mp-count" class="text-sm text-muted mb-8"></div>
+    <div class="grid-auto" id="mp-grid"><div class="loading"><div class="spinner"></div>Memuat produk...</div></div>
+  </div>
+</div>
+
+<!-- PAGE: WISATA -->
+<div id="page-wisata" class="page">
+  <div class="container" style="padding:48px 0">
+    <div class="section-header"><div class="section-tag">🏝️ Pariwisata</div><h2>Destinasi & Pemesanan Wisata</h2><p>Jelajahi surga alam & budaya Papua Barat Daya</p></div>
+    <div class="filter-bar">
+      <input type="text" id="ws-search" placeholder="🔍 Cari destinasi..." oninput="filterWisata()">
+      <select id="ws-kategori" onchange="filterWisata()">
+        <option value="all">Semua Tipe</option>
+        <option value="bahari">🌊 Bahari</option>
+        <option value="alam">🌳 Alam</option>
+        <option value="budaya">🎭 Budaya</option>
+      </select>
+      <select id="ws-sort" onchange="filterWisata()">
+        <option value="">Urutkan</option>
+        <option value="rating">⭐ Rating</option>
+        <option value="harga_asc">💰 Harga Terendah</option>
+      </select>
+    </div>
+    <div class="grid-3" id="ws-grid"><div class="loading"><div class="spinner"></div>Memuat destinasi...</div></div>
+    <div style="margin-top:48px">
+      <div class="section-tag">👥 Pemandu Wisata OAP</div>
+      <h2 class="mb-8 mt-8">Pemandu Bersertifikat</h2>
+      <p class="mb-24">Dukung ekonomi OAP dengan memilih pemandu wisata lokal</p>
+      <div class="grid-3" id="ws-guides"><div class="loading"><div class="spinner"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: EDUKASI -->
+<div id="page-edukasi" class="page">
+  <div class="container" style="padding:48px 0">
+    <div class="section-header"><div class="section-tag">📚 Edukasi & Pelatihan</div><h2>Pusat Pelatihan OAP</h2><p>Kursus online gratis khusus Orang Asli Papua & UMKM</p></div>
+    <div style="background:linear-gradient(135deg,var(--forest),var(--mid));border-radius:var(--radius);padding:28px;color:white;margin-bottom:28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <div style="font-size:56px">🎓</div>
+      <div style="flex:1">
+        <div style="font-size:10px;opacity:.7;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Program Afirmasi OAP</div>
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:800;margin-bottom:8px">Semua Kursus GRATIS untuk OAP</div>
+        <div style="font-size:13px;opacity:.8">Daftar sebagai OAP terverifikasi — akses 40+ kursus, sertifikat digital, program mentoring.</div>
+      </div>
+      <button class="btn btn-gold" onclick="openModal('modal-register')">Daftar OAP →</button>
+    </div>
+    <div class="filter-bar">
+      <input type="text" id="edu-search" placeholder="🔍 Cari kursus..." oninput="filterKursus()">
+      <select id="edu-cat" onchange="filterKursus()">
+        <option value="all">Semua Kategori</option>
+        <option value="bisnis">💼 Bisnis</option>
+        <option value="digital">📱 Digital Marketing</option>
+        <option value="keuangan">💰 Keuangan</option>
+        <option value="wisata">🏝️ Pariwisata</option>
+        <option value="kerajinan">🎨 Kerajinan</option>
+        <option value="pertanian">🌾 Pertanian</option>
+      </select>
+      <select id="edu-level" onchange="filterKursus()">
+        <option value="all">Semua Level</option>
+        <option value="pemula">Pemula</option>
+        <option value="menengah">Menengah</option>
+        <option value="lanjutan">Lanjutan</option>
+      </select>
+    </div>
+    <div class="grid-auto" id="edu-grid"><div class="loading"><div class="spinner"></div>Memuat kursus...</div></div>
+    <div style="margin-top:48px">
+      <div class="section-tag">🏆 Sertifikasi Resmi</div>
+      <h2 class="mt-8 mb-8">Program Sertifikasi Daerah</h2>
+      <div class="grid-3">
+        <div class="card text-center"><div style="font-size:40px;margin-bottom:12px">🏝️</div><h3>Pemandu Wisata</h3><p class="mt-8">Sertifikasi resmi Dinas Pariwisata Provinsi Papua Barat Daya</p><div class="mt-16"><span class="badge badge-green">3 Hari Pelatihan</span></div><button class="btn btn-primary btn-sm mt-16" onclick="daftarSertifikasi('Pemandu Wisata')">Daftar Program</button></div>
+        <div class="card text-center"><div style="font-size:40px;margin-bottom:12px">🛒</div><h3>Wirausaha Digital</h3><p class="mt-8">Program 30 hari membangun usaha digital dari nol</p><div class="mt-16"><span class="badge badge-gold">30 Hari Online</span></div><button class="btn btn-primary btn-sm mt-16" onclick="daftarSertifikasi('Wirausaha Digital')">Daftar Program</button></div>
+        <div class="card text-center"><div style="font-size:40px;margin-bottom:12px">🎨</div><h3>Pengrajin OAP</h3><p class="mt-8">Sertifikasi keaslian produk kerajinan OAP + HKI budaya</p><div class="mt-16"><span class="badge badge-blue">1 Minggu + HKI</span></div><button class="btn btn-primary btn-sm mt-16" onclick="daftarSertifikasi('Pengrajin OAP')">Daftar Program</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PAGE: FINTECH -->
+<div id="page-fintech" class="page">
+  <div class="container" style="padding:48px 0">
+    <div class="section-header"><div class="section-tag">💳 PAPUANA Pay & Fintech</div><h2>Keuangan Digital OAP</h2></div>
+    <div id="fintech-guest" class="">
+      <div class="card text-center" style="max-width:480px;margin:0 auto;padding:40px">
+        <div style="font-size:64px;margin-bottom:16px">💳</div>
+        <h2 class="mb-8">PAPUANA Pay</h2>
+        <p class="mb-24">Login untuk akses dompet digital, cek saldo, pinjaman UMKM, dan riwayat transaksi.</p>
+        <button class="btn btn-primary btn-full" onclick="openModal('modal-login')">Login untuk Akses</button>
+      </div>
+    </div>
+    <div id="fintech-logged" class="hidden">
+      <div class="grid-3" style="margin-bottom:24px">
+        <div class="card text-center" style="background:linear-gradient(135deg,var(--forest),var(--mid));color:white;border:none">
+          <div style="font-size:12px;opacity:.7;margin-bottom:4px">SALDO PAPUANA PAY</div>
+          <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:4px" id="ft-saldo">Rp 0</div>
+          <div style="font-size:11px;opacity:.6" id="ft-user-name">-</div>
+          <div class="mt-16" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+            <button class="btn btn-glass btn-sm" onclick="showToast('Fitur Transfer segera hadir! 💸')">💸 Transfer</button>
+            <button class="btn btn-glass btn-sm" onclick="showToast('Top Up via QRIS segera hadir! 💳')">💳 Top Up</button>
+            <button class="btn btn-glass btn-sm" onclick="showToast('Tarik Tunai segera hadir! 🏧')">🏧 Tarik</button>
+          </div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size:28px;margin-bottom:8px">💰</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Total Transaksi Bulan Ini</div>
+          <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--forest)">Rp 8,75 Jt</div>
+          <div class="stat-growth mt-4">↑ 15% dari bulan lalu</div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size:28px;margin-bottom:8px">🏦</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Tabungan Komunitas</div>
+          <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--forest)">Rp 1,2 Jt</div>
+          <button class="btn btn-secondary btn-sm mt-8" onclick="showToast('Lihat detail tabungan komunitas OAP')">Detail</button>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h3 class="mb-16">📋 Riwayat Transaksi</h3>
+          <div id="ft-transaksi"></div>
+        </div>
+        <div>
+          <h3 class="mb-16">💸 Ajukan Pinjaman UMKM</h3>
+          <div class="card" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#fbbf24;margin-bottom:16px">
+            <div style="font-weight:700;margin-bottom:4px">🌿 Program OAP: Pinjaman 0% Bunga</div>
+            <div style="font-size:12px;color:#92400e">OAP terverifikasi mendapat pinjaman hingga Rp 50 juta tanpa bunga.</div>
+          </div>
+          <div class="form-group"><label class="form-label">Jumlah Pinjaman</label>
+            <select class="form-select" id="loan-amount">
+              <option value="5000000">Rp 5 Juta</option><option value="10000000">Rp 10 Juta</option>
+              <option value="25000000">Rp 25 Juta</option><option value="50000000">Rp 50 Juta</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Tenor</label>
+            <select class="form-select" id="loan-tenor">
+              <option value="6">6 Bulan</option><option value="12">12 Bulan</option><option value="24">24 Bulan</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Tujuan Pinjaman</label>
+            <input class="form-input" id="loan-tujuan" placeholder="Modal usaha, peralatan, dll.">
+          </div>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:16px">
+            <input type="checkbox" id="loan-oap"> Saya adalah OAP terverifikasi (bunga 0%)
+          </label>
+          <button class="btn btn-primary btn-full" onclick="ajukanPinjaman()">Ajukan Pinjaman →</button>
+          <div class="mt-16">
+            <h3 class="mb-12">⚡ Bayar Pajak & Retribusi</h3>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <button class="btn btn-secondary btn-full" onclick="showToast('Sistem pembayaran pajak UMKM sedang disiapkan 🏛️')">🏛️ Bayar Pajak UMKM</button>
+              <button class="btn btn-secondary btn-full" onclick="showToast('Sistem retribusi wisata digital sedang disiapkan 🏝️')">🏝️ Retribusi Wisata</button>
+              <button class="btn btn-secondary btn-full" onclick="navigate('pad')">📊 Lihat Laporan PAD</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: AGRI-MARITIM -->
+<div id="page-agri" class="page">
+  <div class="container" style="padding:48px 0">
+    <div class="section-header"><div class="section-tag">🐟 Agri-Maritim Papua</div><h2>Harga Komoditas Real-Time</h2><p>Supply chain digital untuk nelayan & petani OAP</p></div>
+    <div class="grid-2" style="margin-bottom:32px">
+      <div>
+        <h3 class="mb-16">📈 Harga Komoditas Hari Ini</h3>
+        <div id="agri-komoditas"></div>
+      </div>
+      <div>
+        <h3 class="mb-16">🎣 Kelompok Nelayan Aktif</h3>
+        <div id="agri-nelayan"></div>
+        <div class="card mt-16" style="background:var(--wash);border:none">
+          <h3 class="mb-12">📋 Laporkan Hasil Tangkap/Panen</h3>
+          <div class="form-group"><label class="form-label">Jenis Komoditas</label>
+            <input class="form-input" id="agri-jenis" placeholder="Ikan Kerapu, Lobster, Kopi, dll.">
+          </div>
+          <div class="grid-2" style="gap:12px">
+            <div class="form-group"><label class="form-label">Jumlah</label><input class="form-input" id="agri-jumlah" type="number" placeholder="50"></div>
+            <div class="form-group"><label class="form-label">Satuan</label>
+              <select class="form-select" id="agri-satuan"><option>kg</option><option>ton</option><option>ikat</option><option>liter</option></select>
+            </div>
+          </div>
+          <div class="form-group"><label class="form-label">Harga Jual (Rp/kg)</label><input class="form-input" id="agri-harga" type="number" placeholder="95000"></div>
+          <div class="form-group"><label class="form-label">Lokasi Penangkapan/Panen</label><input class="form-input" id="agri-lokasi" placeholder="Perairan Raja Ampat, Kebun Maybrat..."></div>
+          <button class="btn btn-primary btn-full mt-8" onclick="laporHasil()">Laporkan Hasil →</button>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="background:linear-gradient(135deg,#e0f4ff,#c3e8f5);border-color:#7dd3fc">
+      <h3 class="mb-12">🚢 Program Tol Laut & Pengiriman Antarpulau</h3>
+      <div class="grid-3">
+        <div class="text-center"><div style="font-size:32px;margin-bottom:8px">⛴️</div><div style="font-weight:700">Sorong → Jakarta</div><div class="text-sm text-muted mt-4">7-10 hari · Rp 25rb/kg</div></div>
+        <div class="text-center"><div style="font-size:32px;margin-bottom:8px">🚤</div><div style="font-weight:700">Antar Pulau Lokal</div><div class="text-sm text-muted mt-4">1-3 hari · Rp 8rb/kg</div></div>
+        <div class="text-center"><div style="font-size:32px;margin-bottom:8px">✈️</div><div style="font-weight:700">Pengiriman Udara</div><div class="text-sm text-muted mt-4">1-2 hari · Rp 85rb/kg</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PAGE: BUDAYA -->
+<div id="page-budaya" class="page">
+  <div class="container" style="padding:48px 0">
+    <div class="section-header"><div class="section-tag">🎨 Warisan Budaya OAP</div><h2>Galeri Budaya Papua</h2><p>Pelestarian & komersialisasi budaya asli Papua Barat Daya</p></div>
+    <div class="grid-auto" id="budaya-grid"><div class="loading"><div class="spinner"></div>Memuat galeri...</div></div>
+    <div style="margin-top:48px">
+      <div class="grid-2">
+        <div class="card" style="background:linear-gradient(135deg,#fff8e1,#fde68a);border-color:#fbbf24">
+          <h3 class="mb-12">📜 Perlindungan HKI Produk OAP</h3>
+          <p class="mb-16">Daftarkan motif, kerajinan, dan produk budaya Anda untuk mendapat perlindungan Hak Kekayaan Intelektual.</p>
+          <div style="font-size:12px;color:#92400e;margin-bottom:16px">Proses: Upload dokumen → Verifikasi → Sertifikat HKI digital</div>
+          <button class="btn btn-gold btn-full" onclick="showToast('Form pendaftaran HKI akan dibuka 📜','success')">Daftarkan HKI Budaya →</button>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac">
+          <h3 class="mb-12">📺 Live Artisan — OAP Tampil Langsung</h3>
+          <p class="mb-16">Tampilkan proses pembuatan kerajinan Anda secara live kepada pembeli dari seluruh Indonesia.</p>
+          <div style="font-size:12px;color:#15803d;margin-bottom:16px">Jadwalkan sesi live 15–60 menit, terima pesanan langsung</div>
+          <button class="btn btn-primary btn-full" onclick="showToast('Fitur Live Artisan segera hadir! 📺','success')">Jadwalkan Live Session →</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:32px">
+      <h3 class="mb-16">🗺️ Peta Kampung Budaya Papua Barat Daya</h3>
+      <div class="card" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border-color:#7dd3fc;padding:48px;text-align:center">
+        <div style="font-size:56px;margin-bottom:16px">🗺️</div>
+        <h3>Peta Interaktif Kampung Adat</h3>
+        <p class="mt-8">5 Kabupaten/Kota · 50+ Kampung Adat Terdaftar · 12 Suku Teridentifikasi</p>
+        <div class="grid-4" style="gap:12px;margin-top:24px">
+          <div class="card"><div style="font-size:24px">🏘️</div><div style="font-weight:600;font-size:12px;margin-top:4px">Suku Moi</div><div style="font-size:10px;color:var(--muted)">Sorong</div></div>
+          <div class="card"><div style="font-size:24px">🏘️</div><div style="font-weight:600;font-size:12px;margin-top:4px">Suku Maybrat</div><div style="font-size:10px;color:var(--muted)">Maybrat</div></div>
+          <div class="card"><div style="font-size:24px">🏘️</div><div style="font-weight:600;font-size:12px;margin-top:4px">Suku Kamoro</div><div style="font-size:10px;color:var(--muted)">Sorong Selatan</div></div>
+          <div class="card"><div style="font-size:24px">🏘️</div><div style="font-weight:600;font-size:12px;margin-top:4px">Suku Raja Ampat</div><div style="font-size:10px;color:var(--muted)">Raja Ampat</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: DASHBOARD -->
+<div id="page-dashboard" class="page">
+  <div class="container" style="padding:48px 0">
+    <div class="section-header"><div class="section-tag">📊 Dashboard Analitik</div><h2>Monitoring Ekonomi Real-Time</h2></div>
+    <div class="grid-4" id="dash-stats" style="margin-bottom:32px"></div>
+    <div class="grid-2" style="margin-bottom:32px">
+      <div class="card">
+        <h3 class="mb-16">📈 Grafik Omzet UMKM (2025)</h3>
+        <div class="chart-bar-wrap" id="chart-omzet"></div>
+      </div>
+      <div class="card">
+        <h3 class="mb-16">🥧 Distribusi Sektor Produk</h3>
+        <div class="chart-bar-wrap" id="chart-sektor"></div>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchDashTab('orders',this)">📦 Pesanan</button>
+      <button class="tab-btn" onclick="switchDashTab('bookings',this)">🏝️ Booking Wisata</button>
+      <button class="tab-btn" onclick="switchDashTab('pengaduan',this)">📢 Pengaduan</button>
+      <button class="tab-btn" onclick="switchDashTab('ptsp',this)">🏛️ PTSP Online</button>
+    </div>
+    <div class="table-card" id="dash-orders"></div>
+    <div class="table-card hidden" id="dash-bookings"></div>
+    <div id="dash-pengaduan" class="hidden">
+      <div class="card" style="margin-bottom:16px;background:var(--wash);border:none">
+        <h3 class="mb-12">📢 Sampaikan Pengaduan</h3>
+        <div class="grid-2" style="gap:12px">
+          <div class="form-group"><label class="form-label">Judul Pengaduan</label><input class="form-input" id="pgd-judul" placeholder="Deskripsikan masalah..."></div>
+          <div class="form-group"><label class="form-label">Kategori</label>
+            <select class="form-select" id="pgd-kategori">
+              <option value="infrastruktur">Infrastruktur</option>
+              <option value="pertanian">Pertanian</option>
+              <option value="digital">Digitalisasi</option>
+              <option value="umkm">UMKM</option>
+              <option value="umum">Umum</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">Nama Pelapor</label><input class="form-input" id="pgd-pelapor" placeholder="Nama / Instansi"></div>
+        <button class="btn btn-primary" onclick="kirimPengaduan()">Kirim Pengaduan →</button>
+      </div>
+      <div id="pgd-list"></div>
+    </div>
+    <div id="dash-ptsp" class="hidden">
+      <h3 class="mb-16">🏛️ PTSP Online — Perizinan 1 Hari</h3>
+      <div class="card" style="margin-bottom:16px">
+        <div class="form-group"><label class="form-label">Jenis Izin</label>
+          <select class="form-select" id="ptsp-jenis">
+            <option value="NIB">NIB — Nomor Induk Berusaha (Gratis)</option>
+            <option value="IUMK">IUMK — Izin Usaha Mikro Kecil (Gratis)</option>
+            <option value="SIUP">SIUP — Surat Izin Usaha Perdagangan</option>
+            <option value="Izin Wisata">Izin Usaha Wisata</option>
+            <option value="Sertifikat Halal">Sertifikat Halal UMKM (Gratis)</option>
+          </select>
+        </div>
+        <div class="grid-2" style="gap:12px">
+          <div class="form-group"><label class="form-label">Nama Pemohon</label><input class="form-input" id="ptsp-nama" placeholder="Nama lengkap"></div>
+          <div class="form-group"><label class="form-label">Nama Usaha</label><input class="form-input" id="ptsp-usaha" placeholder="Nama toko/usaha"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Kabupaten/Kota</label>
+          <select class="form-select" id="ptsp-kab">
+            <option>Sorong</option><option>Raja Ampat</option><option>Maybrat</option><option>Sorong Selatan</option><option>Tambrauw</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="ajukanPTSP()">Ajukan Perizinan →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: PAD -->
+<div id="page-pad" class="page">
+  <div class="container" style="padding:48px 0">
+    <div class="section-header"><div class="section-tag">🏛️ PAD &amp; OAP</div><h2>Pendapatan Asli Daerah</h2><p>Kontribusi platform PAPUANA terhadap PAD Papua Barat Daya</p></div>
+    <div id="pad-content"><div class="loading"><div class="spinner"></div>Memuat data PAD...</div></div>
+    <div style="margin-top:48px">
+      <div class="section-tag">🌿 Program Afirmasi OAP</div>
+      <h2 style="margin:12px 0 24px">Hak Istimewa Orang Asli Papua</h2>
+      <div class="grid-4">
+        <div class="card text-center"><div style="font-size:32px;margin-bottom:10px">🎯</div><h3 style="font-size:15px;margin-bottom:6px">Verifikasi OAP</h3><p style="font-size:12px">Badge khusus &amp; akses fitur prioritas</p></div>
+        <div class="card text-center"><div style="font-size:32px;margin-bottom:10px">💸</div><h3 style="font-size:15px;margin-bottom:6px">Pinjaman 0% Bunga</h3><p style="font-size:12px">UMKM OAP hingga Rp 50 juta</p></div>
+        <div class="card text-center"><div style="font-size:32px;margin-bottom:10px">🛒</div><h3 style="font-size:15px;margin-bottom:6px">Komisi 0% Tahun 1</h3><p style="font-size:12px">Marketplace bebas komisi awal</p></div>
+        <div class="card text-center"><div style="font-size:32px;margin-bottom:10px">📚</div><h3 style="font-size:15px;margin-bottom:6px">Pelatihan Gratis</h3><p style="font-size:12px">Akses penuh semua kursus OAP</p></div>
+        <div class="card text-center"><div style="font-size:32px;margin-bottom:10px">🏝️</div><h3 style="font-size:15px;margin-bottom:6px">Prioritas Guide Wisata</h3><p style="font-size:12px">OAP diutamakan sebagai pemandu</p></div>
+        <div class="card text-center"><div style="font-size:32px;margin-bottom:10px">🎨</div><h3 style="font-size:15px;margin-bottom:6px">Perlindungan HKI</h3><p style="font-size:12px">Motif &amp; produk budaya OAP</p></div>
+        <div class="card text-center"><div style="font-size:32px;margin-bottom:10px">📊</div><h3 style="font-size:15px;margin-bottom:6px">Dana Bagi Hasil</h3><p style="font-size:12px">% PAD platform ke komunitas OAP</p></div>
+        <div class="card text-center"><div style="font-size:32px;margin-bottom:10px">🌐</div><h3 style="font-size:15px;margin-bottom:6px">Konten Bahasa Lokal</h3><p style="font-size:12px">UI dalam bahasa daerah Papua</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: WISATA BOOKING -->
+<div id="modal-wisata" class="modal-overlay" onclick="closeModalIfOverlay(event,'modal-wisata')">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header"><h3>🏝️ Detail &amp; Booking Destinasi</h3><button class="modal-close" onclick="closeModal('modal-wisata')">✕</button></div>
+    <div class="modal-body" id="ws-modal-body"></div>
+  </div>
+</div>
+
+<!-- MODAL: PRODUCT DETAIL -->
+<div id="modal-product" class="modal-overlay" onclick="closeModalIfOverlay(event,'modal-product')">
+  <div class="modal">
+    <div class="modal-header"><h3>🛒 Detail Produk</h3><button class="modal-close" onclick="closeModal('modal-product')">✕</button></div>
+    <div class="modal-body" id="mp-body"></div>
+  </div>
+</div>
+
+<!-- MODAL: LOGIN -->
+<div id="modal-login" class="modal-overlay" onclick="closeModalIfOverlay(event,'modal-login')">
+  <div class="modal">
+    <div class="modal-header"><h3>🌿 Masuk ke PAPUANA</h3><button class="modal-close" onclick="closeModal('modal-login')">✕</button></div>
+    <div class="modal-body">
+      <div style="margin-bottom:16px;font-size:13px;background:#f0fdf4;padding:12px;border-radius:10px;color:#15803d">
+        💡 Demo: gunakan email dari daftar user, password: <strong>papuana123</strong><br>
+        Contoh: <code>yuliana@papuana.id</code> atau <code>demo@papuana.id</code>
+      </div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="login-email" type="email" placeholder="email@papuana.id"></div>
+      <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="login-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn btn-primary btn-full" onclick="doLogin()">Masuk →</button>
+      <p style="text-align:center;margin-top:16px;font-size:13px">Belum punya akun? <a onclick="closeModal('modal-login');openModal('modal-register')" style="color:var(--forest);font-weight:700;cursor:pointer">Daftar OAP</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: REGISTER -->
+<div id="modal-register" class="modal-overlay" onclick="closeModalIfOverlay(event,'modal-register')">
+  <div class="modal">
+    <div class="modal-header"><h3>🌿 Daftar sebagai OAP</h3><button class="modal-close" onclick="closeModal('modal-register')">✕</button></div>
+    <div class="modal-body">
+      <div style="background:linear-gradient(135deg,var(--forest),var(--mid));color:white;border-radius:12px;padding:16px;margin-bottom:20px">
+        <div style="font-weight:700;margin-bottom:4px">🌿 Keuntungan OAP Terverifikasi</div>
+        <div style="font-size:12px;opacity:.85">Pinjaman 0% · Kursus gratis · Komisi 0% tahun pertama · Prioritas pemandu wisata</div>
+      </div>
+      <div class="form-group"><label class="form-label">Nama Lengkap</label><input class="form-input" id="reg-name" placeholder="Nama sesuai KTP"></div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="reg-email" type="email" placeholder="email@anda.com"></div>
+      <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="reg-pass" type="password" placeholder="Min. 8 karakter"></div>
+      <div class="form-group"><label class="form-label">Kabupaten/Kota</label>
+        <select class="form-select" id="reg-kabupaten"><option>Sorong</option><option>Raja Ampat</option><option>Maybrat</option><option>Sorong Selatan</option><option>Tambrauw</option></select>
+      </div>
+      <label style="display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:14px;cursor:pointer;padding:14px;background:#f0fdf4;border-radius:10px;border:1px solid #86efac">
+        <input type="checkbox" id="reg-oap" style="width:18px;height:18px;accent-color:var(--forest)">
+        <span>Saya adalah <strong>Orang Asli Papua (OAP)</strong> — untuk mendapat akses &amp; hak prioritas</span>
+      </label>
+      <button class="btn btn-primary btn-full" onclick="doRegister()">Daftar Sekarang →</button>
+      <p style="text-align:center;margin-top:16px;font-size:13px">Sudah punya akun? <a onclick="closeModal('modal-register');openModal('modal-login')" style="color:var(--forest);font-weight:700;cursor:pointer">Masuk</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container" class="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
+

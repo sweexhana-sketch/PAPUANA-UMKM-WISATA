@@ -1,0 +1,292 @@
+<!-- ═══════════════════════════════════════════════════════════
+     PAPUANA — Halaman Tambahan (di-inject ke index.html)
+     Edukasi · Profil Pengguna · Manajemen Toko · PAD Report
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ── EDUKASI ── -->
+<div id="page-edukasi" class="page">
+  <div class="container" style="padding-top:32px;padding-bottom:48px">
+    <div class="section-header">
+      <div class="section-tag">📚 Edukasi & Pelatihan</div>
+      <h2>Pusat Pelatihan UMKM Papua</h2>
+      <p>Semua kursus <strong style="color:var(--forest)">GRATIS</strong> untuk Orang Asli Papua (OAP). Tingkatkan kemampuan dan kembangkan usaha Anda.</p>
+    </div>
+
+    <!-- Banner OAP Gratis -->
+    <div style="background:linear-gradient(135deg,var(--forest),var(--mid));border-radius:var(--radius);padding:24px;margin-bottom:28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      <div style="font-size:48px">🌿</div>
+      <div style="flex:1">
+        <div style="color:var(--pale);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Program Afirmasi OAP</div>
+        <div style="color:white;font-size:18px;font-weight:700;margin-bottom:4px">Semua Kursus Gratis untuk OAP</div>
+        <div style="color:rgba(255,255,255,.7);font-size:13px">Daftarkan akun dengan verifikasi OAP dan nikmati akses penuh ke seluruh materi pelatihan + sertifikat resmi</div>
+      </div>
+      <button class="btn btn-gold" onclick="openModal('modal-register')">Daftar OAP Sekarang →</button>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar" style="margin-bottom:24px">
+      <input type="text" id="edu-search" placeholder="🔍 Cari kursus…" oninput="filterKursus()">
+      <select id="edu-kategori" onchange="filterKursus()">
+        <option value="all">Semua Kategori</option>
+        <option value="marketing">📱 Digital Marketing</option>
+        <option value="keuangan">📊 Keuangan</option>
+        <option value="wisata">🏝️ Panduan Wisata</option>
+        <option value="produksi">🐟 Produksi</option>
+        <option value="bahasa">🗣️ Bahasa</option>
+      </select>
+    </div>
+
+    <div class="grid-auto" id="edu-grid">
+      <div class="loading"><div class="spinner"></div>Memuat kursus…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROFIL ── -->
+<div id="page-profil" class="page">
+  <div class="container" style="padding-top:32px;padding-bottom:48px">
+    <div class="section-header">
+      <div class="section-tag">👤 Akun Saya</div>
+      <h2>Profil & Pengaturan</h2>
+    </div>
+
+    <div class="grid-2" style="gap:24px;align-items:start">
+      <!-- Profil Card -->
+      <div>
+        <div class="card" style="padding:28px;margin-bottom:20px">
+          <div style="text-align:center;margin-bottom:20px">
+            <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--pale),var(--gold));display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 12px">👤</div>
+            <div id="profil-name" style="font-family:var(--font-display);font-size:20px;font-weight:700">—</div>
+            <div id="profil-email" class="text-muted text-sm mt-4">—</div>
+            <div id="profil-oap-wrap" class="mt-8 hidden"><span class="oap-badge">🌿 Orang Asli Papua Terverifikasi</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+              <span class="text-sm text-muted">Kabupaten</span>
+              <span id="profil-kab" class="text-sm font-bold">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+              <span class="text-sm text-muted">Tipe Akun</span>
+              <span id="profil-role" class="text-sm font-bold">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+              <span class="text-sm text-muted">Bergabung</span>
+              <span id="profil-joined" class="text-sm font-bold">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0">
+              <span class="text-sm text-muted">Status</span>
+              <span class="status status-confirmed">Aktif</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pengumuman -->
+        <div class="card" style="padding:24px">
+          <h3 style="margin-bottom:16px">📢 Pengumuman Terbaru</h3>
+          <div id="profil-pengumuman">
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Profil & Statistik Toko -->
+      <div>
+        <div class="card" style="padding:28px;margin-bottom:20px">
+          <h3 style="margin-bottom:20px">✏️ Edit Profil</h3>
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap</label>
+            <input class="form-input" id="edit-name" placeholder="Nama lengkap">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nomor HP / WhatsApp</label>
+            <input class="form-input" id="edit-hp" placeholder="08xxxxxxxxxx" type="tel">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kabupaten/Kota</label>
+            <select class="form-select" id="edit-kab">
+              <option>Sorong</option><option>Raja Ampat</option>
+              <option>Maybrat</option><option>Sorong Selatan</option><option>Tambrauw</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bio / Deskripsi Usaha</label>
+            <textarea class="form-textarea" id="edit-bio" placeholder="Ceritakan usaha Anda…"></textarea>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="simpanProfil()">Simpan Perubahan</button>
+        </div>
+
+        <!-- Statistik Toko -->
+        <div class="card" style="padding:24px" id="profil-stats-toko">
+          <h3 style="margin-bottom:16px">📊 Statistik Toko Saya</h3>
+          <div class="grid-2" style="gap:12px">
+            <div style="padding:14px;background:var(--wash);border-radius:var(--radius-sm);text-align:center">
+              <div style="font-size:24px;font-weight:700;color:var(--forest);font-family:var(--font-display)">10</div>
+              <div class="text-sm text-muted">Produk Aktif</div>
+            </div>
+            <div style="padding:14px;background:#fff3e0;border-radius:var(--radius-sm);text-align:center">
+              <div style="font-size:24px;font-weight:700;color:#e65100;font-family:var(--font-display)">4</div>
+              <div class="text-sm text-muted">Pesanan Baru</div>
+            </div>
+            <div style="padding:14px;background:#e3f2fd;border-radius:var(--radius-sm);text-align:center">
+              <div style="font-size:24px;font-weight:700;color:#1565c0;font-family:var(--font-display)">Rp 2,8 Jt</div>
+              <div class="text-sm text-muted">Omzet Bulan Ini</div>
+            </div>
+            <div style="padding:14px;background:#fce4ec;border-radius:var(--radius-sm);text-align:center">
+              <div style="font-size:24px;font-weight:700;color:#c2185b;font-family:var(--font-display)">4.9⭐</div>
+              <div class="text-sm text-muted">Rating Toko</div>
+            </div>
+          </div>
+          <div class="mt-16">
+            <button class="btn btn-secondary btn-full" onclick="navigate('toko')">🏪 Kelola Toko Saya →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOKO ── -->
+<div id="page-toko" class="page">
+  <div class="container" style="padding-top:32px;padding-bottom:48px">
+    <div class="flex-between mb-24">
+      <div>
+        <div class="section-tag">🏪 Toko Saya</div>
+        <h2>Manajemen Toko UMKM</h2>
+        <p>Kelola produk, pesanan, dan laporan toko Anda</p>
+      </div>
+      <button class="btn btn-primary" onclick="openModal('modal-tambah-produk')">+ Tambah Produk</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTokoTab('produk', this)">📦 Produk Saya</button>
+      <button class="tab-btn" onclick="switchTokoTab('pesanan', this)">📋 Pesanan Masuk</button>
+      <button class="tab-btn" onclick="switchTokoTab('keuangan', this)">💰 Laporan Keuangan</button>
+    </div>
+
+    <!-- Tab: Produk -->
+    <div id="toko-produk">
+      <div class="grid-auto" id="toko-produk-grid">
+        <div class="loading"><div class="spinner"></div>Memuat produk…</div>
+      </div>
+    </div>
+
+    <!-- Tab: Pesanan -->
+    <div id="toko-pesanan" class="hidden">
+      <div class="table-wrap" id="toko-pesanan-table">
+        <div class="loading"><div class="spinner"></div>Memuat pesanan…</div>
+      </div>
+    </div>
+
+    <!-- Tab: Keuangan -->
+    <div id="toko-keuangan" class="hidden">
+      <div id="toko-keu-content">
+        <div class="loading"><div class="spinner"></div>Memuat data keuangan…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAD REPORT ── -->
+<div id="page-pad" class="page">
+  <div class="container" style="padding-top:32px;padding-bottom:48px">
+    <div class="section-header">
+      <div class="section-tag">🏛️ Laporan PAD</div>
+      <h2>Pendapatan Asli Daerah — Papua Barat Daya</h2>
+      <p>Realisasi PAD dari platform digital PAPUANA secara real-time · Tahun 2025</p>
+    </div>
+
+    <!-- Ringkasan PAD -->
+    <div id="pad-summary" class="grid-3 mb-24">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:24px">
+      <!-- Sumber PAD -->
+      <div class="card" style="padding:24px">
+        <h3 style="margin-bottom:20px">💰 Realisasi per Sumber PAD</h3>
+        <div id="pad-sumber-chart"></div>
+      </div>
+
+      <!-- Trend Bulanan -->
+      <div class="card" style="padding:24px">
+        <h3 style="margin-bottom:20px">📈 Tren PAD Bulanan 2025</h3>
+        <div id="pad-trend-chart"></div>
+      </div>
+    </div>
+
+    <!-- Per Kabupaten -->
+    <div class="card" style="padding:24px;margin-bottom:24px">
+      <h3 style="margin-bottom:20px">🗺️ Kontribusi per Kabupaten/Kota</h3>
+      <div class="table-wrap" id="pad-kabupaten-table">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <!-- Export Buttons -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn btn-secondary" onclick="showToast('📄 Laporan PDF sedang digenerate…','success')">📄 Export PDF</button>
+      <button class="btn btn-secondary" onclick="showToast('📊 File Excel berhasil diunduh','success')">📊 Export Excel</button>
+      <button class="btn btn-secondary" onclick="showToast('📧 Laporan dikirim ke BAPENDA','success')">📧 Kirim ke BAPENDA</button>
+      <button class="btn btn-secondary" onclick="showToast('🔄 Sinkronisasi SIPD berhasil','success')">🔄 Sync ke SIPD</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL TAMBAH PRODUK ═══════════════ -->
+<div id="modal-tambah-produk" class="modal-overlay" onclick="closeModalIfOverlay(event,'modal-tambah-produk')">
+  <div class="modal">
+    <div class="modal-header">
+      <div><h3>+ Tambah Produk Baru</h3><p class="text-sm mt-4">Produk akan tampil di marketplace PAPUANA</p></div>
+      <button class="modal-close" onclick="closeModal('modal-tambah-produk')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Nama Produk *</label>
+        <input class="form-input" id="tp-name" placeholder="Cth: Noken Rajut Tradisional">
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Kategori</label>
+          <select class="form-select" id="tp-cat">
+            <option value="kerajinan">🎨 Kerajinan</option>
+            <option value="perikanan">🐟 Perikanan</option>
+            <option value="pertanian">🌾 Pertanian</option>
+            <option value="kuliner">🍲 Kuliner</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ikon Produk</label>
+          <select class="form-select" id="tp-icon">
+            <option value="🎒">🎒 Tas/Noken</option><option value="🐟">🐟 Ikan</option>
+            <option value="☕">☕ Kopi</option><option value="🗿">🗿 Ukiran</option>
+            <option value="🌾">🌾 Sagu/Beras</option><option value="📿">📿 Perhiasan</option>
+            <option value="🧴">🧴 Herbal</option><option value="🦞">🦞 Seafood</option>
+            <option value="📦">📦 Lainnya</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Harga (Rp) *</label>
+          <input class="form-input" id="tp-price" type="number" placeholder="150000" min="1000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Stok</label>
+          <input class="form-input" id="tp-stock" type="number" placeholder="20" min="0">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Deskripsi Produk</label>
+        <textarea class="form-textarea" id="tp-desc" placeholder="Ceritakan keunggulan produk Anda…"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kabupaten Asal</label>
+        <select class="form-select" id="tp-kab">
+          <option>Sorong</option><option>Raja Ampat</option>
+          <option>Maybrat</option><option>Sorong Selatan</option><option>Tambrauw</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="tambahProdukBaru()">🚀 Publikasikan Produk</button>
+    </div>
+  </div>
+</div>
