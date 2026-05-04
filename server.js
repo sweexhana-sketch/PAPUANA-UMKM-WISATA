@@ -37,9 +37,13 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend/index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log('\n  ╔══════════════════════════════════════════════════╗');
-  console.log('  ║   🌿  PAPUANA Platform Digital Papua Barat Daya  ║');
-  console.log(`  ║   🚀  http://localhost:${PORT}                      ║`);
-  console.log('  ╚══════════════════════════════════════════════════╝\n');
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log('\n  ╔══════════════════════════════════════════════════╗');
+    console.log('  ║   🌿  PAPUANA Platform Digital Papua Barat Daya  ║');
+    console.log(`  ║   🚀  http://localhost:${PORT}                      ║`);
+    console.log('  ╚══════════════════════════════════════════════════╝\n');
+  });
+}
+
+module.exports = app;
